@@ -7,7 +7,7 @@ use fastly::{mime, Error, Request, Response};
 ///
 /// This should be changed to match the name of your own backend. See the the `Hosts` section of
 /// the Fastly WASM service UI for more information.
-const BACKEND_NAME: &str = "backend_name";
+const BACKEND_NAME: &str = "backend1";
 
 /// The name of a second backend associated with this service.
 const OTHER_BACKEND_NAME: &str = "other_backend_name";
@@ -48,7 +48,8 @@ fn main(mut req: Request) -> Result<Response, Error> {
             .with_body("<iframe src='https://developer.fastly.com/compute-welcome' style='border:0; position: absolute; top: 0; left: 0; width: 100%; height: 100%'></iframe>\n")),
 
         // If request is to the `/backend` path, send to a named backend.
-        "/backend" => {
+        "/index.html" => {
+            req.set_header(header::HOST, "www.example.com");
             // Request handling logic could go here...  E.g., send the request to an origin backend
             // and then cache the response for one minute.
             req.set_ttl(60);
